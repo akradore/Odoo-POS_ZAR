@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="website_footer_ext" inherit_id="website.layout_footer_copyright">
+            <xpath expr="//div[@t-if='not editable']" position="replace">
+                <div class="pull-right" t-ignore="true" t-if="not editable">
+                    Create a <a href="http://www.ap-systems.co.za/page/website-builder">free website</a> with
+                    <a class="label label-danger" href="http://www.ap-systems.co.za/page/website-builder">AP systems</a>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

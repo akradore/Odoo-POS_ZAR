@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="external_layout_nilesh">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <t t-call="invoice_dot_ap.external_layout_header_nilesh" />
+    <t t-raw="0" />
+    <t t-call="invoice_dot_ap.external_layout_footer_nilesh" />
+</template>
+<template id="external_layout_header_nilesh">
+    <div class="header">
+        <div class="row">
+        </div>
+    </div>
+</template>
+<template id="external_layout_footer_nilesh">
+    <div class="footer">
+    </div>      
+</template>
+<template id="report_dot_invoice">
+    <t t-call="report.html_container">
+        <t t-call="invoice_dot_ap.external_layout_nilesh">
+            <t t-set="doc" t-value="doc.with_context({'lang':doc.partner_id.lang})" />
+            <div class="page">
+                <div class="row">
+                    <div style="width:7cm;height:3.5cm;box-sizing: border-box;border: 1px solid black;top: 10px;left:0.2cm;position:absolute;
+                        border-radius: 0.2cm;
+                    ">
+                        <div class="row">
+                            <div class="col-xs-6" style="padding-left:28px;">
+                                Vat Ref no. : 
+                            </div>
+                            <div class="col-xs-6" style="align:left;">
+                                <span t-field="doc.partner_id.vat"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12" style="padding-left:22px;">
+	                            <div t-if="doc.partner_id" class="mt8">
+			                        <div t-field="doc.partner_id"
+			                            t-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": True, "phone_icons": True}'/>
+			                    </div>
+		                    </div>
+                        </div>
+                    </div>
+<!--                     <div style="width:0.3cm;height:3.5cm;float:right;"> -->
+                        
+<!--                     </div> -->
+                    <div style="width:11.82cm;height:3.5cm;box-sizing: border-box;border: 1px solid black;top: 10px;
+                        left:7.4cm;position:absolute;border-radius: 0.2cm;">
+                        <div class="row">
+                            <div class="col-xs-6" style="padding-left:22px;">
+                                <div t-if="doc.company_id.partner_id" class="mt8">
+                                    <div t-field="doc.company_id.partner_id"
+                                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                                     <div><span t-field="doc.company_id.partner_id.account_number"/></div>
+                                     <div><span t-field="doc.company_id.partner_id.branch_name"/></div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6" style="padding-left:22px;">
+                                <div>Tel:<span t-field="doc.company_id.phone"/></div>
+                                <div>Fax:<span t-field="doc.company_id.fax"/></div>
+                                <div><span t-field="doc.company_id.email"/></div>
+                                <div><span t-field="doc.company_id.website"/></div>
+                                <div>Vat No. :<span t-field="doc.company_id.partner_id.vat"/></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="width:9.9cm;height:4.3cm;box-sizing: border-box;border: 1px solid black;
+                        top: 4cm;left:0.2cm;position:absolute;border-radius: 0.2cm;">
+                        <br></br>
+                        <br></br>
+                        <div><span t-field="doc.partner_id.name"/></div>
+                        <div>P O Box :<span t-field="doc.partner_id.po_box_no_one"/></div>
+                        <div><span t-field="doc.partner_id.po_box_no_two"/></div>
+                        <div><span t-field="doc.partner_id.po_box_no_three"/></div>
+                        <div>Vat Reg No. :<span t-field="doc.partner_id.vat"/></div>
+                    </div>
+<!--                     <div style="width:0.3cm;height:3.5cm;float:right;"> -->
+                        
+<!--                     </div> -->
+                    <div style="width:8.9cm;height:4.55cm;box-sizing: border-box;border: 1px solid black;top: 3.75cm;
+                        left:10.3cm;position:absolute;border-radius: 0.2cm;">
+                        <div align="center" style="height:1cm;width:8.9cm;border-bottom: 1px solid black;margin-left:0.00cm;">
+                            <span >Tax Invoice</span>
+                        </div>
+                        <div align="center" style="height:8mm;width:8.9cm;border-bottom: 1px solid black;margin-left:0.00cm;">
+                            <div>Document No. :<span t-field="doc.number"/></div>
+                        </div>
+                        <div style="height:2.7cm;width:8.9cm;margin-left:0.00cm;">
+                            <div class="row">
+                                <br></br>
+	                            <div class="col-xs-6" style="padding-left:28px;">
+	                                Date : 
+	                            </div>
+	                            <div class="col-xs-6" style="align:left;">
+	                                <span t-field="doc.date_invoice"/>
+	                            </div>
+	                        </div>
+                            <div class="row">
+                                <br></br>
+                                <div class="col-xs-6" style="padding-left:28px;">
+                                    Page : 
+                                </div>
+                                <div class="col-xs-6" style="align:left;">
+                                    1
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="width:19cm;height:1.7cm;box-sizing: border-box;border: 1px solid black;
+                        top: 8.4cm;left:0.2cm;position:absolute;border-radius: 0.2cm;">
+                        <div class="row">
+                            <div class="col-xs-2" style="padding-left:28px;">
+                                Account
+                            </div>
+                            <div class="col-xs-4" style="align:left;">
+                                Your Ref
+                            </div>
+                            <div class="col-xs-2" style="align:left;">
+                                Tax Exempt
+                            </div>
+                            <div class="col-xs-2" style="align:left;">
+                                Sales Code
+                            </div>
+                            <div class="col-xs-2" style="align:left;">
+                                Exclusive
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2" style="padding-left:28px;">
+                                <span t-field="doc.account_id.name"/>
+                            </div>
+                            <div class="col-xs-4" style="align:left;">
+                                <span t-field="doc.user_id.name"/>
+                            </div>
+                            <div class="col-xs-2" style="align:left;">
+                                <span t-field="doc.fiscal_position_id.name"/>
+                            </div>
+                            <div class="col-xs-2" style="align:left;">
+                                <span t-field="doc.name"/>
+                            </div>
+                            <div class="col-xs-2" style="align:left;">
+                                <span t-field="doc.date_invoice"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="width:19cm;height:6.3cm;box-sizing: border-box;border: 1px solid black;border-top: 0px solid black;
+                        top: 10.1cm;left:0.2cm;position:absolute;border-radius: 0.2cm;">
+                          <table class="table table-condensed">
+			                <thead>
+			                    <tr>
+			                        <th>Code</th>
+			                        <th>Description</th>
+			                        <th class="text-right">Quantity</th>
+			                        <th class="text-right">Unit Price</th>
+			                        <th class="text-right">Disc.(%)</th>
+			                        <th class="text-right">Taxes</th>
+			                        <th class="text-right">Tax Excluded Price</th>
+			                    </tr>
+			                </thead>
+			                <tbody class="invoice_tbody">
+			                    <tr t-foreach="doc.invoice_line_ids" t-as="l">
+			                         <td><span t-field="l.product_id.default_code"/></td>
+			                        <td><span t-field="l.name"/></td>
+			                        <td class="hidden"><span t-field="l.origin"/></td>
+			                        <td class="text-right">
+			                            <span t-field="l.quantity"/>
+			                            <span t-field="l.uom_id"  groups="product.group_uom"/>
+			                        </td>
+			                        <td class="text-right">
+			                            <span t-field="l.price_unit"/>
+			                        </td>
+			                        <td t-if="display_discount" class="text-right">
+			                            <span t-field="l.discount"/>
+			                        </td>
+			                        <td class="text-right">
+			                            <span t-esc="', '.join(map(lambda x: (x.description or x.name), l.invoice_line_tax_ids))"/>
+			                        </td>
+			                        <td class="text-right">
+			                            <span t-field="l.price_subtotal" 
+			                                t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+			                        </td>
+			                    </tr>
+			                </tbody>
+			              </table>
+                    </div>
+                </div>
+                <div class="row">
+					<div style="width:11.8cm;height:3.7cm;box-sizing: border-box;border: 1px solid black;
+					    top: 16.9cm;left:0.2cm;position:absolute;border-radius: 0.2cm;">
+					    <p t-if="doc.comment" style="padding-left:20px;">
+			                <span t-field="doc.comment" />
+			            </p>
+			            <div class="row">
+                            <div class="col-xs-6" style="padding-left:20px;">
+                                Received in good order
+                            </div>
+                            <div class="col-xs-6" style="padding-left:20px;">
+                                Date:______________
+                            </div>
+                         </div>
+                         <div class="row">
+                            <div class="col-xs-6" style="padding-left:20px;">
+                                Signature:_____________
+                            </div>
+                            <div class="col-xs-6" style="padding-left:20px;">
+                                Name:________________
+                            </div>
+                         </div>
+					</div>
+					<div style="width:6cm;height:4.2cm;box-sizing: border-box;border: 1px solid black;top: 16.4cm;
+                        left:13.2cm;position:absolute;border-radius: 0.2cm;border-top: 0px solid black;">
+                        <div class="row">
+                            <div class="col-xs-6" style="padding-left:20px;">
+                                Total Net Price
+                            </div>
+                            <div class="col-xs-6" style="padding-left:20px;">
+                                <span t-field="doc.amount_untaxed"/>
+                            </div>
+                         </div>
+<!--                          <div class="row"> -->
+<!--                             <div class="col-xs-6" style="padding-left:20px;"> -->
+<!--                                 Discount (%) -->
+<!--                             </div> -->
+<!--                             <div class="col-xs-6" style="padding-left:20px;"> -->
+<!--                                 Name:________________ -->
+<!--                             </div> -->
+<!--                         </div> -->
+                        <div class="row">
+                            <div class="col-xs-6" style="padding-left:20px;">
+                                Amnt Excl Tax
+                            </div>
+                            <div class="col-xs-6" style="padding-left:20px;">
+                                <span t-field="doc.amount_untaxed"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6" style="padding-left:20px;">
+                                Tax
+                            </div>
+                            <div class="col-xs-6" style="padding-left:20px;">
+                                <span t-field="doc.amount_tax"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6" style="padding-left:20px;">
+                                Total
+                            </div>
+                            <div class="col-xs-6" style="padding-left:20px;">
+                                <span t-field="doc.amount_total"/>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+            </div>
+        </t>
+    </t>
+</template>
+<template id="report_invoice_nilesh">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="invoice_dot_ap.report_dot_invoice" t-lang="doc.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+<report 
+    id="invoice_dot_report"
+    model="account.invoice"
+    string="Dot Report"
+    report_type="qweb-pdf"
+    name="invoice_dot_ap.report_invoice_nilesh"
+    file="invoice_dot_ap.report_invoice_nilesh"
+    attachment_use="False"
+/>
+</data>
+</openerp>

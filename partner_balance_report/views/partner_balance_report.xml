@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<template id="external_layout">
+			<!-- Multicompany -->
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id">
+				</t>
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company">
+				</t>
+			</t>
+			<t t-call="partner_balance_report.external_layout_partnerbalance" />
+			<t t-raw="0" />
+		</template>
+
+		<template id="external_layout_partnerbalance">
+			<div class="header">
+				<div class="row">
+					<div class="col-xs-3">
+						<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;" />
+					</div>
+					<div class="row zero_min_height">
+						<div class="col-xs-12">
+							<div style="border-bottom: 1px solid black;">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-3">
+							<div t-field="company.partner_id" t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}' style="border-bottom: 1px solid black;" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</template>
+
+
+		<template id="partner_balance_report">
+			<t t-call="report.html_container">
+				<!--t t-set="data_report_margin_top" t-value="15" />
+				<t t-set="data_report_header_spacing" t-value="9" /-->
+				<t t-set="data_report_dpi" t-value="110" />
+				<!--<t t-call="partner_balance_report.external_layout">-->
+				<t t-call="report.external_layout">
+					<div class="page">
+						<t t-foreach="docs" t-as="partner">
+
+							<h2 class="text-right">Statement</h2>
+							<div class="row">
+								<div class="col-xs-5 text-left" style="border-width:1px;border-style:ridge;background-color: #325684;color:#FFFFFF;">
+									<strong>To:</strong>
+								</div>
+								<div class="col-xs-4 text-center">
+								</div>
+								<div class="col-xs-3 text-center" style="border-width:1px;border-style:ridge;background-color: #325684;color:#FFFFFF;">
+									<strong>Date</strong>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-5 text-left" style="border-width:1px;border-style:ridge;">
+									<t t-set="address" t-value="display_address(partner)" />
+									<div t-esc="address[0]" />
+									<div t-esc="address[1]" />
+									<div t-esc="address[2]" />
+									<div t-esc="address[3]" />
+									<div t-esc="address[4]" />
+									<div t-esc="address[5]" />
+									<div t-esc="address[6]" />
+									<!--t t-esc="display_address(partner)" /-->
+									<!--div t-field="partner.id" t-field-options='{"widget": "contact", "fields": ["address", "name"]}' /-->
+								</div>
+								<div class="col-xs-4 text-center">
+								</div>
+								<div class="col-xs-3 text-center" style="border-width:1px;border-style:ridge;">
+									<strong><span t-esc="statement_date"/></strong>
+								</div>
+							</div>
+							<!-- Call Aging Function -->
+							<t t-set="statement_date" t-esc="statement_date" />
+							<t t-set="aging" t-value="get_partner_aging(partner,statement_date)" />
+							<div class="row">
+								<div class="col-xs-8" />
+								<div class="col-xs-2 text-center" style="border-width:1px;border-style:ridge;background-color: #325684;color:#FFFFFF;">
+									<strong>Amount Due</strong>
+								</div>
+								<div class="col-xs-2 text-center" style="border-width:1px;border-style:ridge;background-color: #325684;color:#FFFFFF;">
+									<strong>Amount Enc.</strong>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-8" />
+								<div class="col-xs-2 text-center" style="border-width:1px;border-style:ridge;">
+									<span t-esc="aging['currency']"/> <span t-esc="aging['amountdue']"/>
+								</div>
+								<div class="col-xs-2 text-center" style="border-width:1px;border-style:ridge;">
+									<strong> </strong>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-xs-2 text-center" style="border-width:1px;border-style:ridge;background-color: #325684;color:#FFFFFF;">
+									<strong>INV Date</strong>
+								</div>
+								<div class="col-xs-2 text-center" style="border-width:1px;border-style:ridge;background-color: #325684;color:#FFFFFF;">
+									<strong> REF</strong>
+								</div>
+<!-- 								<div class="col-xs-1 text-center" style="border-width:1px;border-style:ridge;background-color: #325684;color:#FFFFFF;"> -->
+<!-- 									<strong> REF</strong> -->
+<!-- 								</div> -->
+								<div class="col-xs-2 text-center" style="border-width:1px;border-style:ridge;background-color: #325684;color:#FFFFFF;">
+									<strong>Due Date</strong>
+								</div>
+								<div class="col-xs-2 text-center" style="border-width:1px;border-style:ridge;background-color: #325684;color:#FFFFFF;">
+									<strong> INV Amount</strong>
+								</div>
+								<div class="col-xs-2 text-center" style="border-width:1px;border-style:ridge;background-color: #325684;color:#FFFFFF;">
+									<strong> Amount</strong>
+								</div>
+								<div class="col-xs-2 text-center" style="border-width:1px;border-style:ridge;background-color: #325684;color:#FFFFFF;">
+									<strong> Balance</strong>
+								</div>
+							</div>
+
+							<div class="row" style="height:50%">
+								<t t-foreach="get_lines(partner, statement_date)" t-as="line">
+								    <div class="row" style="height:50%">
+									<div class="col-xs-2 text-center" style="border-right-width:1px;border-right-style:ridge;border-left-width:1px;border-left-style:ridge;"><span t-esc="line['date_invoice']"/></div>
+									<!--<div class="col-xs-2 text-left" style="border-right-width:1px;border-right-style:ridge;"><span t-esc="line['line_desc']"/></div>-->
+<!-- 									<div class="col-xs-1 text-left" style="border-right-width:1px;border-right-style:ridge;"><span t-esc="line['line_number']"/></div> -->
+									<div class="col-xs-2 text-left" style="border-right-width:1px;border-right-style:ridge;"><span t-esc="line['line_name']"/></div>
+									<div class="col-xs-2 text-left" style="border-right-width:1px;border-right-style:ridge;"><span t-esc="line['line_date']"/></div>
+									<div class="col-xs-2 text-left" style="border-right-width:1px;border-right-style:ridge;"><span t-esc="line['line_amount']"/></div>
+									<div class="col-xs-2 text-right" style="border-right-width:1px;border-right-style:ridge;"><span t-esc="line['amount_total']"/></div>
+									<div class="col-xs-2 text-right" style="border-right-width:1px;border-right-style:ridge;"><span t-esc="line['balance']"/></div>
+                                    </div>
+								</t>
+								<t t-if="not get_lines(partner, statement_date)">
+									<div class="col-xs-12 text-center" style="border-right-width:1px;border-right-style:ridge;border-left-width:1px;border-left-style:ridge;">NO Records Found!</div>
+								</t>
+							</div>
+
+							<div class="row" style="border-width:1px;border-style:ridge;background-color: #325684;color:#FFFFFF;">
+								<div class="col-xs-2 text-center">
+									<strong> CURRENT</strong>
+								</div>
+								<div class="col-xs-2 text-center">
+									<strong> 1-30DAYS PAST DUE</strong>
+								</div>
+								<div class="col-xs-2 text-center">
+									<strong> 31-60DAYS PAST DUE</strong>
+								</div>
+								<div class="col-xs-2 text-center">
+									<strong> 61-90DAYS PAST DUE</strong>
+								</div>
+								<div class="col-xs-2 text-center">
+									<strong> OVER 90DAYS PAST DUE</strong>
+								</div>
+								<div class="col-xs-2 text-center">
+									<strong> Amount Due</strong>
+								</div>
+							</div>
+							<div class="row" style="border-width:1px;border-style:ridge;">
+								<div class="col-xs-2 text-center" style="border-right-width:1px;border-right-style:ridge;"><span t-esc="aging['0days']"/></div>
+								<div class="col-xs-2 text-center" style="border-right-width:1px;border-right-style:ridge;"><span t-esc="aging['1to30days']"/></div>
+								<div class="col-xs-2 text-center" style="border-right-width:1px;border-right-style:ridge;"><span t-esc="aging['31to60days']"/></div>
+								<div class="col-xs-2 text-center" style="border-right-width:1px;border-right-style:ridge;"><span t-esc="aging['61to90days']"/></div>
+								<div class="col-xs-2 text-center" style="border-right-width:1px;border-right-style:ridge;"><span t-esc="aging['over90days']"/></div>
+								<div class="col-xs-2 text-center"><span t-esc="aging['currency']"/> <span t-esc="aging['amountdue']"/></div>
+							</div>
+							<!--div class="row">
+								<div class="col-xs-5" style="border-width:1px;border-style:ridge;">
+									<div>Bank Name: Emirates NBD</div>
+									<div>Branch : DUBAI Police Academy</div>
+									<div>Account Name: IT Connections General Trading LLC</div>
+									<div>Account Number: 1014639774401</div>
+									<div>SWIFT CODE: NBDUAEAD</div>
+									<div>IBAN: AE23 0260 0010 1463 9774 401</div>
+								</div>
+								<div class="col-xs-9 text-center">
+									<strong>
+									</strong>
+								</div>
+							</div-->
+							<p style="page-break-before:always;">
+							</p>
+
+						</t>
+					</div>
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>

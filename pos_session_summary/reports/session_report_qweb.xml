@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        
+        <template id="report_pos_session_qweb">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                                            
+                        <div  class="page">
+                            <div class="col-xs-12">
+                               <br/><br/><br/><br/>
+                            </div>
+                            <strong>Name :</strong>
+                            <span t-field="o.name"/><br/>
+                             <strong>POS User :</strong>
+                            <span t-field="o.user_id"/><br/>
+                             <strong>POS Location :</strong>
+                            <span t-field="o.config_id"/><br/>
+                             <strong>Total Units Sold :</strong>
+                            <span t-field="o.order_qty"/><br/>
+                             <strong>Total Sales Amount :</strong>
+                            <span t-field="o.total_amount"/><br/>
+                             
+                             <strong>Session Opening Date and Time :</strong>
+                            <span t-field="o.start_at"/><br/>
+                             <strong>Session Closing Date and Time :</strong>
+                            <span t-field="o.stop_at"/><br/>
+                                                        
+                            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                            
+                            <table width="100%" class="table table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th>Session</th>
+                                                    <th>Payment Method</th>
+                                                    <th>Opening Balance</th>
+                                                    <th>Total Sales</th>
+                                                    <th>Closing Balance</th>
+                                                    <th>Difference</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+                                                    <tr t-foreach="o.statement_ids" t-as="p">
+                                                        
+                                                           
+                                                            <td><span t-esc="p.name"/> </td>
+                                                            <td><span t-esc="p.journal_id.name"/> </td>
+                                                            <td><span t-esc="p.balance_start"/> </td>
+                                                            <td><span t-esc="p.total_entry_encoding"/> </td>
+                                                            <td><span t-esc="p.balance_end_real"/> </td>
+                                                            <td><span t-esc="p.difference"/> </td>
+                                                            <td><span t-esc="p.state"/> </td>
+                                                           
+                                                    </tr>
+                                            </tbody>
+                            </table> 
+                            <br/><br/><br/><br/><br/><br/>
+                            
+                            <span><strong>Checked By </strong></span> <span>....................................................</span> <span><strong>Date </strong></span> <span>.......................  </span> <span><strong>Signature </strong></span> <span>....................</span>
+                                                
+                                                        
+                        </div>
+                    
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_report_pos_session_qweb"
+            model="pos.session"
+            string="Session Sales"
+            report_type="qweb-pdf"
+            name="pos_session_summary.report_pos_session_qweb"
+            file="pos_session_summary.report_pos_session_qweb"
+            attachment_use="False"
+        />
+
+</odoo>

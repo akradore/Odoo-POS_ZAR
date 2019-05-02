@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="view_partner_balance" model="ir.ui.view">
+			<field name="name">Partner Balance</field>
+			<field name="model">partner.balance.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Partner Balance" version="7.0">
+					<group string="Would you like to generate partner balance report?">
+						<field name="statement_date" colspan="2" />
+					</group>
+					<footer>
+						<button name="print_report" string="Print" type="object" class="oe_highlight" />
+						or
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_partner_balance">
+			<field name="name">Partner Balance</field>
+			<field name="res_model">partner.balance.wizard</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_partner_balance" />
+			<field name="target">new</field>
+		</record>
+
+		<record model="ir.values" id="ir_values_account_partner_balancereport">
+			<field name="key2" eval="'client_print_multi'" />
+			<field name="model" eval="'res.partner'" />
+			<field name="name">Print Partner Balance</field>
+			<field name="value" eval="'ir.actions.act_window,%d'%action_partner_balance" />
+		</record>
+
+		<!--act_window id="act_partner_balalnce_report" name="Partner Balance Report" res_model="partner.balance.wizard" src_model="res.partner" view_mode="form" target="new"/-->
+
+		<!--menuitem id="menu_inventory_report" name="Inventory" parent="base.menu_reporting" sequence="35" groups="base.group_no_one" />
+		<menuitem action="action_inventory_report" id="menu_action_inventory_report" parent="menu_inventory_report" sequence="0" groups="base.group_no_one" /-->
+
+	</data>
+</openerp>

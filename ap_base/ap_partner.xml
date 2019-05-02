@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="res_ap_partner_inherit_form" model="ir.ui.view"><!-- //creating the name of inheritance view -->
+            <field name="name">partner.ap.inherit.view</field><!--common-->
+            <field name="model">res.partner</field><!--common-->
+            <field name="inherit_id" ref="base.view_partner_form"/><!-- view found in ui-->
+            <field name="arch" type="xml"><!--common-->
+
+                <xpath expr="//field[@name='website']" position="after"><!--inheritance of this path inside form-->
+                    <field name="vat"/>
+                    <field name="reg"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

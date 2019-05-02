@@ -1,0 +1,7 @@
+id,name,amount_type,amount,account_id:id,refund_account_id:id,type_tax_use,description,chart_template_id:id,sequence
+vat_output_std,Output VAT - Standard Rate,percent,14,84003_account,84003_account,sale,Output VAT 14%,l10n_za_chart_template,1
+vat_output_zero,Output VAT - Zero Rated,percent,0,84003_account,84003_account,sale,Output VAT 0%,l10n_za_chart_template,2
+vat_output_exempt,Output VAT - Exempt,percent,0,84003_account,84003_account,sale,Output VAT Exempt,l10n_za_chart_template,2
+vat_input_std,Input VAT - Standard Rate,percent,14,84003_account,84003_account,purchase,Input VAT 14%,l10n_za_chart_template,1
+vat_input_zero,Input VAT - Zero Rated,percent,0,84003_account,84003_account,purchase,Input VAT 0%,l10n_za_chart_template,2
+vat_input_exempt,Input VAT - Exempt,percent,0,84003_account,84003_account,purchase,Input VAT Exempt,l10n_za_chart_template,2

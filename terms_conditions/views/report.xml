@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="act_report_xml_view" model="ir.ui.view">
+            <field name="name">ir.actions.report.xml.inherited</field>
+            <field name="model">ir.actions.report.xml</field>
+            <field name="inherit_id" ref="base.act_report_xml_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Sales Agreement">
+                        <div>
+                            <field name="add_terms_conditions"/>
+                            <label for="add_terms_conditions" string="Attach Terms and Conditions to this report"/>
+                        </div>
+                        <group attrs="{'invisible':[('add_terms_conditions','=',False)]}">
+                            <group>
+                                <field name="terms_conditions_language_field" attrs="{'required':[('add_terms_conditions','=',True)]}"/>
+                                <div>
+                                    <span>e.g.<br/>
+                                        for Sale Order - "partner_id.lang"<br/>
+                                        for Account Invoice - "partner_id.lang"</span>
+                                </div>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+        <template id="report_invoice_document" inherit_id="account.report_invoice_document" >
+            <xpath expr="//div[@class='row'][last()]" position="after">
+                <div>
+                    <p>
+                        <strong>Terms and Conditions:</strong>
+                        <p>
+                            By paying this, the customer confirms to have read and accepted the Terms and
+                            Conditions overleaf.
+                        </p>
+                    </p>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

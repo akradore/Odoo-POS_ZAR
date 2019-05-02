@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            id="action_partneroverdue_report"
+            model="res.partner"
+            string="Partner Balance"
+            report_type="qweb-pdf"
+            name="partner_overdue_report.partner_overdue_report"
+            file="partner_overdue_report.partner_overdue_report"
+            menu="False"
+        />
+
+    </data>
+</openerp>

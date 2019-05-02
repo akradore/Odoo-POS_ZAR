@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_pos_config_form">
+            <field name="name">pos.config.form.view</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name='oldest_cache_time'/>
+                    <button name='delete_cache' type="object"
+                        string="Invalidate cache"
+                        attrs="{'invisible': [('oldest_cache_time', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_product_catche_form_template">
+            <field name="name">view.product.catche.form.template</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lst_price']" position="after">
+                    <field name='is_updated' readonly="1"/>
+                    <field name='is_new' readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

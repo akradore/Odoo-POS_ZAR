@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="vat_layout_ext" inherit_id="report.external_layout_header">
+            <xpath expr="//div[@class='header']" position="replace">
+                <div class="header">
+
+                    <div class="row">
+
+                        <div class="col-xs-5"/>
+
+                        <div>
+
+                             <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 90px; center"/>
+
+                        </div>
+
+                        <div class="col-Zxs-4 text-right" style="margin-top:0px;" t-field="company.rml_header1"/>
+
+                    </div>
+
+                    <div class="row zero_min_height">
+
+                        <div class="col-xs-12">
+    
+                                 <div style="border-bottom: 0px solid black;"/>
+    
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-xs-3" name="company_address">
+
+                             <div t-field="company.partner_id" t-field-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: true}" style="border-bottom: 0px solid black;"/>
+
+                             <div t-if="company.partner_id.vat">VAT: <span t-raw="company.partner_id.vat"/></div>
+
+                             <div t-if="company.partner_id.reg">REG: <span t-raw="company.partner_id.reg"/></div>
+                             
+                             
+
+                        </div>
+
+                    </div>
+
+            </div>
+            </xpath>
+        </template>
+
+        <template id="vat_co_layout_ext" inherit_id="account.report_invoice_document">
+            <xpath expr="//address[@t-field='o.partner_id']" position="after">
+                <div t-if="o.partner_id.vat">VAT: <span t-field="o.partner_id.vat"/></div>
+                <div t-if="o.partner_id.reg">REG: <span t-field="o.partner_id.reg"/></div>
+            </xpath>
+            <xpath expr="//span[@t-if='o.partner_id.vat']" position="replace">
+                <p></p>
+            </xpath>
+        </template>
+        
+
+        <record id="view_account_config_ap" model="ir.ui.view">
+            <field name="name">account settings ap</field>
+            <field name="model">account.config.settings</field>
+            <field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="priority" eval="18"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(account.open_account_charts_modules)d']" position="after">
+                    <button string="load default za values"
+                                    icon="gtk-go-forward"
+                                    name="load_default_za_values"
+                                    type="object"
+                                    class="oe_link"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
