@@ -8,7 +8,7 @@
     'version': '10.0.1.1.0',
     'category': 'Accounting & Finance',
     'summary': 'OCA Financial Reports',
-    'author': "Eficent, Odoo Community Association (OCA)",
+    'author': "Eficent, Odoo Community Association (OCA)", 'contributors': "adore@ap-accounting.co.za",
     'website': 'https://github.com/OCA/account-financial-reporting',
     'license': 'AGPL-3',
     'depends': [

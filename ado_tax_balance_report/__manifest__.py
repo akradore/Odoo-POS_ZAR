@@ -1,7 +1,7 @@
 {'name': "Tax Balance Report", 'summary': "",
        'version': "1.0",
        'depends': ['sale'],
-       'author': "Sandhya Galoriya", 'contributors': "Sandhya Galoriya", 'maintainer': "Nilesh Galoriya",
+       'author': "Adore Ruzvidzo", 'contributors': "Adore Ruzvidzo,Sandhya Galoriya", 'maintainer': "Nilesh Galoriya",
        'license': '',
        'website': "http://www.ap-accounting.co.za",
        'category': 'Partner',
